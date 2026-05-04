@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outbound Dashboard — May 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --peach: #FFD4B8;
+  --coral: #FFB6A3;
+  --rose: #F5A89C;
+  --blush: #E89BA8;
+  --mauve: #C99BC4;
+  --lilac: #B4A3D6;
+  --lavender: #A8B5DC;
+
+  --ink: #2D2438;
+  --ink-soft: #4A3D5A;
+  --ink-mute: #7A6B89;
+
+  --cream: #FFF8F2;
+  --paper: #FFFAF5;
+
+  --sage: #7BA89A;
+  --sage-soft: #C8DDD4;
+  --sage-bg: rgba(123, 168, 154, 0.16);
+  --gold: #D4A85C;
+  --gold-soft: #F0DBA8;
+  --gold-bg: rgba(244, 224, 176, 0.4);
+  --rust: #D17B5C;
+  --rust-bg: rgba(209, 123, 92, 0.16);
+
+  --brett: #F5A89C;
+  --brett-deep: #A04E3D;
+  --dylan: #C99BC4;
+  --dylan-deep: #6E3F75;
+  --trevor: #9AAEDB;
+  --trevor-deep: #3D4D85;
+
+  --shadow-soft: 0 4px 20px rgba(125, 90, 140, 0.08);
+  --shadow-card: 0 8px 32px rgba(125, 90, 140, 0.12);
+  --shadow-hover: 0 16px 48px rgba(125, 90, 140, 0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(170deg, #FBF1EA 0%, #F7E9E5 35%, #EDE3EC 70%, #E1E2EE 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.005em;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.14 0 0 0 0 0.22 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.wrap {
+  position: relative;
+  z-index: 2;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 36px 32px 80px;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.title-block { flex: 1; min-width: 320px; }
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--ink-mute);
+}
+
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: clamp(36px, 4.5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+h1 em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--rust);
+}
+
+.subtitle {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--ink-soft);
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+.date-stamp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-align: right;
+  background: rgba(255, 250, 245, 0.55);
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 90, 140, 0.1);
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.date-stamp .big {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 4px;
+  letter-spacing: -0.015em;
+  text-transform: none;
+}
+
+.day-progress {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* STANDARDS BAR */
+.standards-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(45, 36, 56, 0.92);
+  color: rgba(255, 255, 255, 0.95);
+  padding: 14px 22px;
+  border-radius: 14px;
+  margin-bottom: 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.standards-bar .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-right: 4px;
+}
+
+.standards-bar .std {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+.standards-bar .std .num {
+  font-weight: 700;
+  color: var(--peach);
+  font-variant-numeric: tabular-nums;
+}
+.standards-bar .divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,0.18);
+}
+.standards-bar .standard-or {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  padding: 0 4px;
+}
+
+/* TABS */
+.tab-nav {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 24px;
+  background: rgba(255, 250, 245, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  width: fit-content;
+  box-shadow: var(--shadow-soft);
+}
+
+.tab {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+
+.tab:hover { color: var(--ink); }
+
+.tab.active {
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 2px 8px rgba(45, 36, 56, 0.18);
+}
+
+.tab .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.view { display: none; }
+.view.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SECTION HEADING */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.section-head h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* CARRY TOGGLE */
+.carry-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 90, 140, 0.2);
+  background: rgba(255, 250, 245, 0.6);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  backdrop-filter: blur(8px);
+}
+.carry-toggle:hover {
+  background: rgba(255, 250, 245, 0.85);
+  transform: translateY(-1px);
+}
+.carry-toggle.active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+.carry-toggle .pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+.carry-toggle:not(.active) .pill {
+  background: rgba(125, 90, 140, 0.12);
+  color: var(--mauve);
+}
+
+/* TEAM GRID — head-to-head layout */
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+
+.vs-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--rust);
+  letter-spacing: -0.02em;
+  font-style: italic;
+  position: sticky;
+  top: 20px;
+}
+.vs-divider::before {
+  content: '';
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--ink-mute), transparent);
+  margin-bottom: 14px;
+  opacity: 0.4;
+}
+.vs-divider::after {
+  content: '';
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--ink-mute), transparent);
+  margin-top: 14px;
+  opacity: 0.4;
+}
+
+.team-block {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Other OB section — below the head-to-head, smaller compact card */
+.tbd-section {
+  margin-top: 20px;
+  background: rgba(255, 250, 245, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(125, 90, 140, 0.15);
+  border-radius: 18px;
+  padding: 22px 24px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+.tbd-section:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+.tbd-section.is-active {
+  border-radius: 18px 18px 0 0;
+  border-bottom-color: rgba(255,255,255,0.4);
+}
+
+.tbd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tbd-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.015em;
+}
+
+.tbd-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-mute);
+  opacity: 0.5;
+}
+
+.tbd-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* Compact KPI strip for the Other OB card */
+.other-kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.other-kpi {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(125, 90, 140, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.other-kpi-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+}
+
+.other-kpi-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.other-kpi-sub {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+
+.other-rep-count {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.other-rep-pill {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(125, 90, 140, 0.1);
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.other-rep-pill .mgr-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.other-rep-pill .carry-mini {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--mauve);
+  background: rgba(201, 155, 196, 0.14);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.tbd-expand-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(125, 90, 140, 0.15);
+}
+
+.tbd-expand-hint .arrow {
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.tbd-section.is-active .tbd-expand-hint .arrow {
+  transform: rotate(180deg);
+}
+
+/* Drilldown for Other OB */
+.other-drilldown {
+  background: rgba(255, 250, 245, 0.55);
+  backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(125, 90, 140, 0.15);
+  border-right: 1px solid rgba(125, 90, 140, 0.15);
+  border-bottom: 1px solid rgba(125, 90, 140, 0.15);
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+.other-drilldown.is-open { display: block; }
+
+/* New hire badge */
+.new-hire-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, rgba(244, 224, 176, 0.5) 0%, rgba(244, 224, 176, 0.25) 100%);
+  border: 1px solid var(--gold);
+  color: #8B6F2A;
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-left: 8px;
+}
+
+.team-card {
+  background: rgba(255, 250, 245, 0.6);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.team-card.brett.is-active { border-color: var(--brett); border-bottom-color: rgba(255,255,255,0.4); border-radius: 20px 20px 0 0; }
+.team-card.dylan.is-active { border-color: var(--dylan); border-bottom-color: rgba(255,255,255,0.4); border-radius: 20px 20px 0 0; }
+.team-card.trevor.is-active { border-color: var(--trevor); border-bottom-color: rgba(255,255,255,0.4); border-radius: 20px 20px 0 0; }
+
+.team-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.team-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.team-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.team-name .swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.brett .team-name .swatch { background: var(--brett); }
+.dylan .team-name .swatch { background: var(--dylan); }
+.trevor .team-name .swatch { background: var(--trevor); }
+
+.rep-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* PACE TILES — primary visual for May day-zero */
+.pace-grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pace-grid-outcomes {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pace-grid-activity {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Section dividers — outcomes vs activity */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 10px;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(125, 90, 140, 0.18) 50%, transparent 100%);
+}
+.section-divider .divider-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+}
+.section-divider.activity-divider .divider-label {
+  color: rgba(122, 107, 137, 0.7);
+}
+
+/* Activity tiles get muted treatment — supporting role, not headline */
+.pace-grid-activity .pace-tile {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 10px 14px 12px;
+}
+.pace-grid-activity .pace-value {
+  font-size: 19px;
+}
+
+.pace-tile {
+  position: relative;
+  padding: 14px 16px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(125, 90, 140, 0.08);
+  transition: all 0.2s ease;
+}
+
+.pace-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pace-target {
+  font-size: 10px;
+  color: var(--ink-mute);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-family: 'Inter', sans-serif;
+  text-transform: none;
+}
+
+.pace-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.pace-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.pace-value-currency { font-size: 22px; }
+
+.pace-needed {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+
+.pace-bar {
+  height: 6px;
+  background: rgba(125, 90, 140, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pace-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease, background 0.3s ease;
+  background: var(--sage);
+}
+
+.pace-fill.green { background: linear-gradient(90deg, var(--sage) 0%, var(--sage-soft) 100%); }
+.pace-fill.yellow { background: linear-gradient(90deg, var(--gold) 0%, #E5C684 100%); }
+.pace-fill.red { background: linear-gradient(90deg, var(--rust) 0%, #E89A7E 100%); }
+.pace-fill.zero { background: rgba(125, 90, 140, 0.18); }
+
+.pace-tile.is-on-pace { border-color: rgba(123, 168, 154, 0.35); }
+.pace-tile.is-warning { border-color: rgba(212, 168, 92, 0.35); }
+.pace-tile.is-behind { border-color: rgba(209, 123, 92, 0.35); }
+
+/* RV tile is special — bigger, full-width */
+.rv-banner {
+  background: linear-gradient(135deg, rgba(245, 168, 156, 0.18) 0%, rgba(201, 155, 196, 0.18) 50%, rgba(154, 174, 219, 0.18) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  padding: 16px 22px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.rv-banner .rv-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-banner .rv-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+}
+
+.rv-banner .rv-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.rv-banner .rv-meta {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+}
+
+.rv-banner .rv-april {
+  text-align: right;
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+}
+.rv-banner .rv-april .num {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  display: block;
+  letter-spacing: -0.015em;
+}
+
+/* CARRY ROW — only visible when toggle is on */
+.carry-row {
+  display: none;
+  background: rgba(201, 155, 196, 0.12);
+  border: 1px dashed rgba(201, 155, 196, 0.4);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.show-carry .carry-row { display: flex; }
+
+.carry-row .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mauve);
+  font-weight: 600;
+}
+
+.carry-row .num {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0 6px;
+}
+
+.carry-row .carry-help {
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-style: italic;
+}
+
+.expand-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(125, 90, 140, 0.15);
+}
+
+.expand-hint .arrow {
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.team-card.is-active .expand-hint .arrow {
+  transform: rotate(180deg);
+}
+
+/* DRILL-DOWN */
+.drilldown {
+  background: rgba(255, 250, 245, 0.55);
+  backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(255, 255, 255, 0.6);
+  border-right: 1px solid rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+.drilldown.brett.is-open { border-color: var(--brett); border-top: none; }
+.drilldown.dylan.is-open { border-color: var(--dylan); border-top: none; }
+.drilldown.trevor.is-open { border-color: var(--trevor); border-top: none; }
+
+.drilldown.is-open { display: block; }
+
+@keyframes slideDown {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 1500px; }
+}
+
+.rep-table-header,
+.rep-row {
+  display: grid;
+  grid-template-columns: 28px minmax(140px, 1.3fr) repeat(8, 1fr);
+  align-items: center;
+  gap: 6px;
+  padding: 12px 18px;
+  font-size: 12.5px;
+}
+
+/* with carry shown, add 1 column */
+.show-carry .rep-table-header,
+.show-carry .rep-row {
+  grid-template-columns: 28px minmax(140px, 1.3fr) 64px repeat(8, 1fr);
+}
+
+.rep-table-header {
+  background: rgba(45, 36, 56, 0.92);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.rep-table-header div,
+.rep-table-header .metric {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.rep-row {
+  border-bottom: 1px solid rgba(125, 90, 140, 0.06);
+  transition: background 0.18s ease;
+}
+.rep-row:last-child { border-bottom: none; }
+.rep-row:hover { background: rgba(255, 255, 255, 0.4); }
+
+.rep-rank {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.rep-name {
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.metric .value-text { font-weight: 500; }
+
+/* Pace dot for rep-level metrics */
+.pace-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(125, 90, 140, 0.15);
+  flex-shrink: 0;
+}
+.pace-dot.green { background: var(--sage); }
+.pace-dot.yellow { background: var(--gold); }
+.pace-dot.red { background: var(--rust); }
+
+/* Carry cell highlight */
+.carry-cell {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mauve);
+  background: rgba(201, 155, 196, 0.14);
+  padding: 3px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+.carry-cell.high {
+  background: rgba(201, 155, 196, 0.28);
+  color: var(--dylan-deep);
+}
+
+/* Daily progress strip — tiny banner showing where we are in May */
+.month-strip {
+  background: rgba(255, 250, 245, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.month-strip .progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(125, 90, 140, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.month-strip .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose) 0%, var(--mauve) 50%, var(--lavender) 100%);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.month-strip .day-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: var(--ink-mute);
+}
+.month-strip .day-text strong {
+  color: var(--ink);
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.legend-zero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.legend-zero .item { display: flex; align-items: center; gap: 6px; }
+.legend-zero .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+/* MOBILE */
+@media (max-width: 1100px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .vs-divider {
+    flex-direction: row;
+    padding: 0;
+    font-size: 24px;
+  }
+  .vs-divider::before, .vs-divider::after {
+    width: 60px;
+    height: 1px;
+    margin: 0 14px;
+  }
+  .pace-grid-outcomes { grid-template-columns: repeat(3, 1fr); }
+  .pace-grid-activity { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .wrap { padding: 24px 14px 60px; }
+  .pace-grid-outcomes { grid-template-columns: 1fr; }
+  .pace-grid-activity { grid-template-columns: 1fr 1fr; }
+  .standards-bar { font-size: 12px; padding: 12px 16px; }
+
+  .rep-table-header { display: none; }
+  .rep-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(125, 90, 140, 0.08);
+  }
+  .rep-rank, .rep-name { grid-column: 1 / -1; }
+  .metric { text-align: left; justify-content: flex-start; }
+  .metric::before {
+    content: attr(data-label);
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+}
+
+.footer-note {
+  margin-top: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+.footer-note a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: rgba(125, 90, 140, 0.25);
+}
+.footer-note a:hover { color: var(--rust); }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="wrap">
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">May 2026 · Velocity Org Outbound</div>
+      <h1>Outbound <em>Dashboard</em></h1>
+      <p class="subtitle">Brett vs Dylan. Two teams. One month. Let's go.</p>
+    </div>
+    <div class="date-stamp">
+      Day 3<span class="big" id="dateLabel">May 3, 2026</span>
+      <div class="day-progress" id="dayProgress">Day 0 of 22 · 0% through</div>
+    </div>
+  </header>
+
+  <!-- STANDARDS BAR — sets expectations -->
+  <div class="standards-bar">
+    <span class="label">Standards</span>
+    <span class="std"><span class="num">125</span> calls/day</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">15</span> DM connects/day</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">6</span> SALs/week</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">5</span> SQLs/week</span>
+    <span class="divider"></span>
+    <span class="std"><span class="num">4</span> CWs/month</span>
+    <span class="standard-or">·</span>
+    <span class="std" style="color:rgba(255,255,255,0.8)">hit 2 of 3 daily</span>
+  </div>
+
+  <!-- MONTH PROGRESS STRIP -->
+  <div class="month-strip">
+    <span class="day-text"><strong>May 1</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="monthProgressFill" style="width: 0%"></div></div>
+    <span class="day-text">May 31</span>
+  </div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tab active" data-view="standings">Standings <span class="count">2 teams</span></button>
+    <button class="tab" data-view="leaderboard">Leaderboard <span class="count">22 reps</span></button>
+    <button class="tab" data-view="april">April Final <span class="count">archive</span></button>
+  </div>
+
+  <!-- STANDINGS VIEW -->
+  <div class="view active" id="view-standings">
+    <div class="section-head">
+      <h2>Head-to-head</h2>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="carry-toggle" id="carryToggle" onclick="toggleCarry()">
+          Show April Carry <span class="pill" id="carryPillTotal">334</span>
+        </button>
+      </div>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
+    <div id="tbdSection"></div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="view" id="view-leaderboard">
+    <div class="section-head">
+      <h2>Org leaderboard</h2>
+      <p style="font-size:13px;color:var(--ink-mute);font-style:italic">Will populate as the month builds. Right now everyone's at zero.</p>
+    </div>
+    <div style="background:rgba(255,250,245,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:22px;padding:60px 24px;text-align:center;color:var(--ink-mute)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:8px">Day 1</div>
+      <div style="font-family:'Inter',sans-serif;font-size:18px;color:var(--ink-soft)">Leaderboard activates as soon as today's calls land.</div>
+      <div style="font-size:13px;margin-top:14px;font-style:italic">Tomorrow morning's data drop = first standings.</div>
+    </div>
+  </div>
+
+  <!-- APRIL ARCHIVE VIEW -->
+  <div class="view" id="view-april">
+    <div class="section-head">
+      <h2>April final standings</h2>
+      <p style="font-size:13px;color:var(--ink-mute);font-style:italic">Locked. Historical reference.</p>
+    </div>
+    <div style="background:rgba(255,250,245,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:22px;padding:32px;color:var(--ink-soft);line-height:1.7">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:20px;color:var(--ink-mute)">April 2026 Recap</div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px">
+        <div style="background:rgba(245,168,156,0.12);border-radius:14px;padding:18px;border:1px solid rgba(245,168,156,0.3)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brett-deep);margin-bottom:8px;font-weight:600">Brett's Team</div>
+          <div style="font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:var(--ink)">$189k</div>
+          <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">16 CWs · 41% close rate · 105 carry</div>
+        </div>
+        <div style="background:rgba(201,155,196,0.14);border-radius:14px;padding:18px;border:1px solid rgba(201,155,196,0.3)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dylan-deep);margin-bottom:8px;font-weight:600">Dylan's Team</div>
+          <div style="font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:var(--ink)">$162k</div>
+          <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">10 CWs · 189 SALs (org #1) · <strong style="color:var(--dylan-deep)">156 carry</strong></div>
+        </div>
+        <div style="background:rgba(154,174,219,0.16);border-radius:14px;padding:18px;border:1px solid rgba(154,174,219,0.3)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--trevor-deep);margin-bottom:8px;font-weight:600">Trevor's Team</div>
+          <div style="font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:var(--ink)">$76k</div>
+          <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">10 CWs · 354 DM/rep (org #1) · 129 carry</div>
+        </div>
+      </div>
+
+      <p style="font-size:14px;color:var(--ink-soft)">
+        <strong style="color:var(--ink)">Org total: $427k RV · 36 OB CWs · 479 SALs</strong> across 27 reps in three teams. Brett's team took the CW + RV crowns with a final-day blitz. Dylan's team led pipeline build with 189 SALs. Org restructured for May — Trevor's team dissolved, reps reassigned to Brett or Dylan.
+      </p>
+
+      <p style="font-size:13px;margin-top:18px;color:var(--ink-mute);font-style:italic">
+        Full April dashboard archived at <a href="https://dbfieldpulse.github.io/ob-standings/" target="_blank" style="color:var(--rust);text-decoration:none;font-weight:500;border-bottom:1px solid rgba(209,123,92,0.3)">dbfieldpulse.github.io/ob-standings</a>
+      </p>
+    </div>
+  </div>
+
+  <p class="footer-note">May 2026 · Outbound Org · Updated daily · Red thresholds activate May 8</p>
+</div>
+
+<script>
+const DATA = {"reps": [{"rep": "Alex Funches", "team": "Brett", "calls": 265, "dm": 15, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 10, "april_calls": 3324, "april_dm": 270, "april_sal": 12, "april_sql": 2, "april_cw": 2, "april_rv": 39473, "is_new_hire": false}, {"rep": "Andrew Kim", "team": "Brett", "calls": 203, "dm": 39, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 19.5, "sit_rate": 0.0, "cr": null, "april_carry": 3, "april_calls": 3459, "april_dm": 270, "april_sal": 5, "april_sql": 3, "april_cw": 4, "april_rv": 32281, "is_new_hire": false}, {"rep": "Austin Miyanishi", "team": "Brett", "calls": 229, "dm": 22, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 11, "april_calls": 1235, "april_dm": 138, "april_sal": 11, "april_sql": 0, "april_cw": 0, "april_rv": 3012, "is_new_hire": false}, {"rep": "Brooke Jacques", "team": "Brett", "calls": 388, "dm": 38, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 19.0, "sit_rate": 0.0, "cr": null, "april_carry": 18, "april_calls": 4310, "april_dm": 256, "april_sal": 23, "april_sql": 6, "april_cw": 1, "april_rv": 12450, "is_new_hire": false}, {"rep": "Collin Simon", "team": "Brett", "calls": 283, "dm": 28, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 28.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 18, "april_calls": 3105, "april_dm": 342, "april_sal": 25, "april_sql": 7, "april_cw": 2, "april_rv": 9883, "is_new_hire": false}, {"rep": "Spencer Norton", "team": "Brett", "calls": 257, "dm": 28, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 28.0, "sit_rate": 0.0, "cr": null, "april_carry": 11, "april_calls": 3151, "april_dm": 241, "april_sal": 15, "april_sql": 5, "april_cw": 2, "april_rv": 32249, "is_new_hire": false}, {"rep": "Tommy Theologis", "team": "Brett", "calls": 231, "dm": 22, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 7.3, "sit_rate": 0.0, "cr": null, "april_carry": 17, "april_calls": 2998, "april_dm": 345, "april_sal": 26, "april_sql": 10, "april_cw": 3, "april_rv": 50908, "is_new_hire": false}, {"rep": "Theo Stephen", "team": "Brett", "calls": 235, "dm": 17, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 17.0, "sit_rate": 0.0, "cr": null, "april_carry": 35, "april_calls": 3245, "april_dm": 439, "april_sal": 40, "april_sql": 6, "april_cw": 2, "april_rv": 6346, "is_new_hire": false}, {"rep": "Ashley Winterbottom", "team": "Brett", "calls": 180, "dm": 12, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 12.0, "sit_rate": 0.0, "cr": null, "april_carry": 6, "april_calls": 3931, "april_dm": 431, "april_sal": 11, "april_sql": 5, "april_cw": 0, "april_rv": 5359, "is_new_hire": false}, {"rep": "Andrew Haskell", "team": "Brett", "calls": 352, "dm": 31, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 31.0, "sit_rate": 0.0, "cr": null, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Adam Esquivel", "team": "Dylan", "calls": 319, "dm": 21, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 21.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 24, "april_calls": 2869, "april_dm": 309, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 9343, "is_new_hire": false}, {"rep": "Alex Guzman", "team": "Dylan", "calls": 226, "dm": 30, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 30.0, "sit_rate": 0.0, "cr": null, "april_carry": 10, "april_calls": 2746, "april_dm": 326, "april_sal": 13, "april_sql": 5, "april_cw": 2, "april_rv": 18007, "is_new_hire": false}, {"rep": "Briana Nono", "team": "Dylan", "calls": 297, "dm": 26, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 13.0, "sit_rate": 0.0, "cr": null, "april_carry": 14, "april_calls": 3202, "april_dm": 442, "april_sal": 19, "april_sql": 6, "april_cw": 0, "april_rv": 3958, "is_new_hire": false}, {"rep": "Eric Rice", "team": "Dylan", "calls": 286, "dm": 41, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 12, "april_calls": 3399, "april_dm": 484, "april_sal": 12, "april_sql": 0, "april_cw": 2, "april_rv": 6771, "is_new_hire": false}, {"rep": "Ethan Moody", "team": "Dylan", "calls": 132, "dm": 25, "sal": 0, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": 0.0, "april_carry": 17, "april_calls": 3345, "april_dm": 328, "april_sal": 26, "april_sql": 9, "april_cw": 0, "april_rv": 0, "is_new_hire": false}, {"rep": "John Meenan", "team": "Dylan", "calls": 271, "dm": 33, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 16.5, "sit_rate": 0.0, "cr": null, "april_carry": 18, "april_calls": 3166, "april_dm": 390, "april_sal": 21, "april_sql": 4, "april_cw": 1, "april_rv": 5134, "is_new_hire": false}, {"rep": "John Ogbeide", "team": "Dylan", "calls": 267, "dm": 27, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 27.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 23, "april_calls": 2823, "april_dm": 367, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 26568, "is_new_hire": false}, {"rep": "Trenton Hines", "team": "Dylan", "calls": 167, "dm": 23, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 23.0, "sit_rate": 0.0, "cr": null, "april_carry": 25, "april_calls": 3031, "april_dm": 240, "april_sal": 27, "april_sql": 5, "april_cw": 2, "april_rv": 18534, "is_new_hire": false}, {"rep": "Will Baldridge", "team": "Dylan", "calls": 237, "dm": 10, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 10.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 20, "april_calls": 4126, "april_dm": 311, "april_sal": 25, "april_sql": 10, "april_cw": 2, "april_rv": 33079, "is_new_hire": false}, {"rep": "Jackson Woodfin", "team": "Dylan", "calls": 110, "dm": 14, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 13, "april_calls": 2630, "april_dm": 351, "april_sal": 15, "april_sql": 4, "april_cw": 1, "april_rv": 8524, "is_new_hire": false}, {"rep": "Josh Rieth", "team": "Dylan", "calls": 355, "dm": 21, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 21.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Trevor Schliefer", "team": "Other", "calls": 0, "dm": 0, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Jonathan Munday", "team": "Other", "calls": 186, "dm": 30, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 10.0, "sit_rate": 33.3, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Nisheet Shah", "team": "Other", "calls": 335, "dm": 26, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 26.0, "sit_rate": 0.0, "cr": null, "april_carry": 16, "april_calls": 2270, "april_dm": 274, "april_sal": 17, "april_sql": 3, "april_cw": 1, "april_rv": 11939, "is_new_hire": false}, {"rep": "Michael Bernhardt", "team": "Other", "calls": 280, "dm": 30, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 13, "april_calls": 2780, "april_dm": 369, "april_sal": 16, "april_sql": 5, "april_cw": 1, "april_rv": 8674, "is_new_hire": false}, {"rep": "Bray Pettegrew", "team": "Other", "calls": 234, "dm": 22, "sal": 1, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 22.0, "sit_rate": 200.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}], "teams": [{"team": "Brett", "rep_count": 10, "total_calls": 2623, "total_dm": 252, "total_sal": 12, "total_sql": 1, "total_cw": 0, "total_rv": 0, "team_carry": 129, "april_total_rv": 191961, "april_total_cw": 16, "april_total_sal": 168}, {"team": "Dylan", "rep_count": 11, "total_calls": 2667, "total_dm": 271, "total_sal": 10, "total_sql": 5, "total_cw": 0, "total_rv": 0, "team_carry": 176, "april_total_rv": 129918, "april_total_cw": 12, "april_total_sal": 210}, {"team": "Other", "rep_count": 5, "total_calls": 1035, "total_dm": 108, "total_sal": 5, "total_sql": 3, "total_cw": 0, "total_rv": 0, "team_carry": 29, "april_total_rv": 20613, "april_total_cw": 2, "april_total_sal": 33}], "snapshot_date": "2026-05-03", "compared_to": null, "standards": {"calls_per_day": 125, "dm_per_day": 15, "sal_per_week": 6, "sql_per_week": 5, "cw_per_month": 4}, "days_elapsed": 1, "working_days_in_month": 22};
+
+const STANDARDS = DATA.standards;
+const DAYS_ELAPSED = DATA.days_elapsed;
+const TOTAL_DAYS = DATA.working_days_in_month;
+
+const fmt = n => typeof n === 'number' ? n.toLocaleString('en-US', {maximumFractionDigits: 1}) : (n || 0);
+const fmtCurrencyShort = n => {
+  if (!n && n !== 0) return '—';
+  if (n >= 1000) return '$' + (n / 1000).toFixed(1) + 'k';
+  return '$' + n.toLocaleString();
+};
+
+// Pace calculation: how is the rep/team doing vs target at THIS day?
+// Returns 'green' (>=100% pace), 'yellow' (75-99%), 'red' (<75%), or 'zero' (no data yet)
+function paceStatus(actual, dailyTarget, daysElapsed) {
+  if (daysElapsed === 0) return 'zero';
+  const expectedSoFar = dailyTarget * daysElapsed;
+  if (expectedSoFar === 0) return 'zero';
+  const pct = actual / expectedSoFar;
+  if (pct >= 1.0) return 'green';
+  if (pct >= 0.75) return 'yellow';
+  return 'red';
+}
+
+function paceFillPct(actual, dailyTarget, totalDays) {
+  // Bar fills from 0 to 100% of monthly target
+  const monthlyTarget = dailyTarget * totalDays;
+  if (monthlyTarget === 0) return 0;
+  return Math.min(100, (actual / monthlyTarget) * 100);
+}
+
+function renderTeamCards() {
+  const grid = document.getElementById('teamGrid');
+  // Only render Brett and Dylan in main grid
+  const mainTeams = DATA.teams.filter(t => t.team !== 'TBD' && t.team !== 'Other');
+  const tbdTeam = DATA.teams.find(t => t.team === 'TBD' || t.team === 'Other');
+
+  const cardsHTML = mainTeams.map(t => {
+    const cls = t.team.toLowerCase();
+    const repsInTeam = DATA.reps.filter(r => r.team === t.team);
+    const repCount = repsInTeam.length;
+
+    const callsTarget = STANDARDS.calls_per_day * repCount;
+    const dmTarget = STANDARDS.dm_per_day * repCount;
+    const salWeeklyTarget = STANDARDS.sal_per_week * repCount;
+    const sqlWeeklyTarget = STANDARDS.sql_per_week * repCount;
+    const cwMonthlyTarget = STANDARDS.cw_per_month * repCount;
+
+    const callsPace = paceStatus(t.total_calls, callsTarget, DAYS_ELAPSED);
+    const dmPace = paceStatus(t.total_dm, dmTarget, DAYS_ELAPSED);
+    const salPace = paceStatus(t.total_sal, salWeeklyTarget / 5, DAYS_ELAPSED);
+    const sqlPace = paceStatus(t.total_sql, sqlWeeklyTarget / 5, DAYS_ELAPSED);
+    const cwPace = paceStatus(t.total_cw, cwMonthlyTarget / TOTAL_DAYS, DAYS_ELAPSED);
+
+    return `
+      <div class="team-block">
+        <div class="team-card ${cls}" data-team="${t.team}" onclick="toggleDrill('${t.team}')">
+          <div class="team-tag-row">
+            <div class="team-name"><span class="swatch"></span>${t.team}'s Team</div>
+            <div class="rep-count">${t.rep_count} reps</div>
+          </div>
+
+          <div class="rv-banner">
+            <div class="rv-stack">
+              <div class="rv-label">May Recurring Revenue</div>
+              <div class="rv-value">${fmtCurrencyShort(t.total_rv)}</div>
+              <div class="rv-meta">${t.total_cw} CW · target $500k+</div>
+            </div>
+            <div class="rv-april">
+              April<span class="num">${fmtCurrencyShort(t.april_total_rv)}</span>
+            </div>
+          </div>
+
+          <div class="carry-row">
+            <span class="label">April Carry</span>
+            <span class="num">${t.team_carry}</span>
+            <span>open SALs walking in</span>
+            <span class="carry-help">(work these — they sit faster)</span>
+          </div>
+
+          <div class="section-divider">
+            <span class="divider-label">Outcomes</span>
+          </div>
+
+          <div class="pace-grid pace-grid-outcomes">
+            <div class="pace-tile is-${cwPace === 'green' ? 'on-pace' : cwPace === 'yellow' ? 'warning' : cwPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">Closed Won<span class="pace-target">${cwMonthlyTarget}/month · team</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${t.total_cw}</span>
+                <span class="pace-needed">need ${cwMonthlyTarget}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${cwPace}" style="width:${paceFillPct(t.total_cw, cwMonthlyTarget / TOTAL_DAYS, TOTAL_DAYS)}%"></div></div>
+            </div>
+
+            <div class="pace-tile is-${sqlPace === 'green' ? 'on-pace' : sqlPace === 'yellow' ? 'warning' : sqlPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">SQLs<span class="pace-target">${sqlWeeklyTarget}/week · team</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${t.total_sql}</span>
+                <span class="pace-needed">need ${Math.round(sqlWeeklyTarget * 4.4)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${sqlPace}" style="width:${paceFillPct(t.total_sql, sqlWeeklyTarget / 5, TOTAL_DAYS)}%"></div></div>
+            </div>
+
+            <div class="pace-tile is-${salPace === 'green' ? 'on-pace' : salPace === 'yellow' ? 'warning' : salPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">SALs<span class="pace-target">${salWeeklyTarget}/week · team</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${t.total_sal}</span>
+                <span class="pace-needed">need ${Math.round(salWeeklyTarget * 4.4)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${salPace}" style="width:${paceFillPct(t.total_sal, salWeeklyTarget / 5, TOTAL_DAYS)}%"></div></div>
+            </div>
+          </div>
+
+          <div class="section-divider activity-divider">
+            <span class="divider-label">Activity</span>
+          </div>
+
+          <div class="pace-grid pace-grid-activity">
+            <div class="pace-tile is-${dmPace === 'green' ? 'on-pace' : dmPace === 'yellow' ? 'warning' : dmPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">DM Connects<span class="pace-target">${STANDARDS.dm_per_day}/day · per rep</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${fmt(t.total_dm)}</span>
+                <span class="pace-needed">need ${fmt(dmTarget * TOTAL_DAYS)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${dmPace}" style="width:${paceFillPct(t.total_dm, dmTarget, TOTAL_DAYS)}%"></div></div>
+            </div>
+
+            <div class="pace-tile is-${callsPace === 'green' ? 'on-pace' : callsPace === 'yellow' ? 'warning' : callsPace === 'red' ? 'behind' : ''}">
+              <div class="pace-label">Calls<span class="pace-target">${STANDARDS.calls_per_day}/day · per rep</span></div>
+              <div class="pace-value-row">
+                <span class="pace-value">${fmt(t.total_calls)}</span>
+                <span class="pace-needed">need ${fmt(callsTarget * TOTAL_DAYS)}</span>
+              </div>
+              <div class="pace-bar"><div class="pace-fill ${callsPace}" style="width:${paceFillPct(t.total_calls, callsTarget, TOTAL_DAYS)}%"></div></div>
+            </div>
+          </div>
+
+          <div class="expand-hint">
+            <span>see reps</span>
+            <span class="arrow">▼</span>
+          </div>
+        </div>
+        <div class="drilldown ${cls}" id="drill-${t.team}"></div>
+      </div>
+    `;
+  });
+
+  // Insert VS divider between the two teams
+  grid.innerHTML = cardsHTML[0] + '<div class="vs-divider">VS</div>' + cardsHTML[1];
+
+  // Other OB section (Danny/Troy reps)
+  const tbdContainer = document.getElementById('tbdSection');
+  if (tbdTeam && tbdTeam.rep_count > 0) {
+    const tbdReps = DATA.reps.filter(r => r.team === 'TBD' || r.team === 'Other');
+
+    // Manager mapping for Other reps
+    const REP_TO_MGR = {
+      'Trevor Schliefer': 'Danny',
+      'Jonathan Munday': 'Danny',
+      'Nisheet Shah': 'Troy',
+      'Michael Bernhardt': 'Troy',
+      'Bray Pettegrew': 'Troy',
+    };
+
+    const otherCallsTarget = STANDARDS.calls_per_day * tbdTeam.rep_count;
+    const otherDmTarget = STANDARDS.dm_per_day * tbdTeam.rep_count;
+    const otherSalWeekly = STANDARDS.sal_per_week * tbdTeam.rep_count;
+    const otherCwTarget = STANDARDS.cw_per_month * tbdTeam.rep_count;
+
+    tbdContainer.innerHTML = `
+      <div class="tbd-section" id="otherSection" onclick="toggleOtherDrill()">
+        <div class="tbd-header">
+          <div class="tbd-title">Other OB · Danny + Troy</div>
+          <div class="tbd-meta">${tbdTeam.rep_count} reps · ${tbdTeam.team_carry} carry</div>
+        </div>
+
+        <div class="other-rep-count">
+          ${tbdReps.map(r => `
+            <span class="other-rep-pill">
+              <span>${r.rep}</span>
+              <span class="mgr-tag">${REP_TO_MGR[r.rep] || '?'}</span>
+              ${r.april_carry > 0 ? `<span class="carry-mini">${r.april_carry} carry</span>` : ''}
+              ${r.is_new_hire ? '<span class="new-hire-badge" style="margin-left:0">NEW</span>' : ''}
+            </span>
+          `).join('')}
+        </div>
+
+        <div class="other-kpi-strip">
+          <div class="other-kpi">
+            <div class="other-kpi-label">RV</div>
+            <div class="other-kpi-value">${fmtCurrencyShort(tbdTeam.total_rv)}</div>
+            <div class="other-kpi-sub">${tbdTeam.total_cw} CW</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">SQLs</div>
+            <div class="other-kpi-value">${tbdTeam.total_sql}</div>
+            <div class="other-kpi-sub">need ${Math.round(otherSalWeekly * 4.4)}</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">SALs</div>
+            <div class="other-kpi-value">${tbdTeam.total_sal}</div>
+            <div class="other-kpi-sub">need ${Math.round(otherSalWeekly * 4.4)}</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">DM</div>
+            <div class="other-kpi-value">${fmt(tbdTeam.total_dm)}</div>
+            <div class="other-kpi-sub">need ${fmt(otherDmTarget * TOTAL_DAYS)}</div>
+          </div>
+          <div class="other-kpi">
+            <div class="other-kpi-label">Calls</div>
+            <div class="other-kpi-value">${fmt(tbdTeam.total_calls)}</div>
+            <div class="other-kpi-sub">need ${fmt(otherCallsTarget * TOTAL_DAYS)}</div>
+          </div>
+        </div>
+
+        <div class="tbd-expand-hint">
+          <span>see reps</span>
+          <span class="arrow">▼</span>
+        </div>
+      </div>
+      <div class="other-drilldown" id="otherDrill"></div>
+    `;
+  } else {
+    tbdContainer.innerHTML = '';
+  }
+}
+
+let openTeam = null;
+
+function toggleDrill(team) {
+  if (openTeam === team) {
+    document.getElementById(`drill-${team}`).classList.remove('is-open');
+    document.querySelector(`[data-team="${team}"]`).classList.remove('is-active');
+    openTeam = null;
+    return;
+  }
+  if (openTeam) {
+    document.getElementById(`drill-${openTeam}`).classList.remove('is-open');
+    document.querySelector(`[data-team="${openTeam}"]`).classList.remove('is-active');
+  }
+  openTeam = team;
+  document.querySelector(`[data-team="${team}"]`).classList.add('is-active');
+
+  const reps = DATA.reps.filter(r => r.team === team).sort((a,b) => b.rv - a.rv || b.cw - a.cw || b.sal - a.sal);
+  const showCarry = document.body.classList.contains('show-carry');
+
+  const drill = document.getElementById(`drill-${team}`);
+  drill.innerHTML = `
+    <div class="rep-table-header">
+      <div>#</div>
+      <div>Rep</div>
+      ${showCarry ? '<div class="metric" style="justify-content:flex-end">Carry</div>' : ''}
+      <div class="metric" style="justify-content:flex-end">Calls</div>
+      <div class="metric" style="justify-content:flex-end">DM</div>
+      <div class="metric" style="justify-content:flex-end">SAL</div>
+      <div class="metric" style="justify-content:flex-end">SQL</div>
+      <div class="metric" style="justify-content:flex-end">CW</div>
+      <div class="metric" style="justify-content:flex-end">RV</div>
+      <div class="metric" style="justify-content:flex-end">Sit %</div>
+      <div class="metric" style="justify-content:flex-end">CR %</div>
+    </div>
+    ${reps.map((r, i) => {
+      const callsPace = paceStatus(r.calls, STANDARDS.calls_per_day, DAYS_ELAPSED);
+      const dmPace = paceStatus(r.dm, STANDARDS.dm_per_day, DAYS_ELAPSED);
+      const salPace = paceStatus(r.sal, STANDARDS.sal_per_week / 5, DAYS_ELAPSED);
+      const cwPace = paceStatus(r.cw, STANDARDS.cw_per_month / TOTAL_DAYS, DAYS_ELAPSED);
+      const carryClass = r.april_carry >= 18 ? 'high' : '';
+
+      return `
+        <div class="rep-row">
+          <div class="rep-rank">${i + 1}</div>
+          <div class="rep-name">${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</div>
+          ${showCarry ? `<div class="metric" data-label="Carry"><span class="carry-cell ${carryClass}">${r.april_carry}</span></div>` : ''}
+          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span></div>
+          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span></div>
+          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span></div>
+          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span></div>
+          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span></div>
+          <div class="metric" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
+          <div class="metric" data-label="Sit %"><span class="value-text">${r.sit_rate !== null ? r.sit_rate + '%' : '—'}</span></div>
+          <div class="metric" data-label="CR %"><span class="value-text">${r.cr !== null ? r.cr + '%' : '—'}</span></div>
+        </div>
+      `;
+    }).join('')}
+  `;
+  drill.classList.add('is-open');
+}
+
+function toggleCarry() {
+  document.body.classList.toggle('show-carry');
+  const btn = document.getElementById('carryToggle');
+  btn.classList.toggle('active');
+  // Re-render the open drilldown if any
+  if (openTeam) {
+    const t = openTeam;
+    openTeam = null;  // force re-toggle
+    toggleDrill(t);
+  }
+}
+
+let otherOpen = false;
+
+function toggleOtherDrill() {
+  const section = document.getElementById('otherSection');
+  const drill = document.getElementById('otherDrill');
+
+  if (otherOpen) {
+    section.classList.remove('is-active');
+    drill.classList.remove('is-open');
+    otherOpen = false;
+    return;
+  }
+
+  // Build the drilldown content
+  const reps = DATA.reps.filter(r => r.team === 'Other' || r.team === 'TBD').sort((a,b) => b.rv - a.rv || b.cw - a.cw);
+  const REP_TO_MGR = {
+    'Trevor Schliefer': 'Danny',
+    'Jonathan Munday': 'Danny',
+    'Nisheet Shah': 'Troy',
+    'Michael Bernhardt': 'Troy',
+    'Bray Pettegrew': 'Troy',
+  };
+  const showCarry = document.body.classList.contains('show-carry');
+
+  drill.innerHTML = `
+    <div class="rep-table-header">
+      <div>#</div>
+      <div>Rep</div>
+      ${showCarry ? '<div class="metric" style="justify-content:flex-end">Carry</div>' : ''}
+      <div class="metric" style="justify-content:flex-end">Mgr</div>
+      <div class="metric" style="justify-content:flex-end">Calls</div>
+      <div class="metric" style="justify-content:flex-end">DM</div>
+      <div class="metric" style="justify-content:flex-end">SAL</div>
+      <div class="metric" style="justify-content:flex-end">SQL</div>
+      <div class="metric" style="justify-content:flex-end">CW</div>
+      <div class="metric" style="justify-content:flex-end">RV</div>
+    </div>
+    ${reps.map((r, i) => {
+      const callsPace = paceStatus(r.calls, STANDARDS.calls_per_day, DAYS_ELAPSED);
+      const dmPace = paceStatus(r.dm, STANDARDS.dm_per_day, DAYS_ELAPSED);
+      const salPace = paceStatus(r.sal, STANDARDS.sal_per_week / 5, DAYS_ELAPSED);
+      const cwPace = paceStatus(r.cw, STANDARDS.cw_per_month / TOTAL_DAYS, DAYS_ELAPSED);
+      const carryClass = r.april_carry >= 18 ? 'high' : '';
+
+      return `
+        <div class="rep-row">
+          <div class="rep-rank">${i + 1}</div>
+          <div class="rep-name">${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</div>
+          ${showCarry ? `<div class="metric" data-label="Carry"><span class="carry-cell ${carryClass}">${r.april_carry}</span></div>` : ''}
+          <div class="metric" data-label="Mgr"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-mute);letter-spacing:0.06em">${REP_TO_MGR[r.rep] || '—'}</span></div>
+          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span></div>
+          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span></div>
+          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span></div>
+          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span></div>
+          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span></div>
+          <div class="metric" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
+        </div>
+      `;
+    }).join('')}
+  `;
+
+  section.classList.add('is-active');
+  drill.classList.add('is-open');
+  otherOpen = true;
+}
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('view-' + t.dataset.view).classList.add('active');
+  });
+});
+
+// Update day progress
+const daysElapsed = DATA.days_elapsed;
+const dayPct = (daysElapsed / TOTAL_DAYS) * 100;
+document.getElementById('dayProgress').textContent = `Day ${daysElapsed} of ${TOTAL_DAYS} · ${Math.round(dayPct)}% through`;
+document.getElementById('monthProgressFill').style.width = dayPct + '%';
+
+renderTeamCards();
+</script>
+</body>
+</html>
