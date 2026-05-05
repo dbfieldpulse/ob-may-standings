@@ -1036,6 +1036,228 @@ h1 em {
   border-radius: 50%;
 }
 
+/* Daily movement deltas (green up-arrows for positive change) */
+.delta-up {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--sage);
+  background: rgba(123, 168, 154, 0.16);
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 6px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.delta-up::before {
+  content: '↑';
+  font-size: 10px;
+}
+
+/* LEADERBOARD VIEW */
+.lb-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 90, 140, 0.18);
+  background: rgba(255, 250, 245, 0.55);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.chip:hover {
+  background: rgba(255, 250, 245, 0.85);
+  transform: translateY(-1px);
+}
+
+.chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chip.active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+.chip.active .dot { background: var(--cream) !important; }
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.sort-select {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 8px 36px 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 90, 140, 0.18);
+  background: rgba(255, 250, 245, 0.55);
+  color: var(--ink);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23583B65' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px;
+}
+
+.lb-board {
+  background: rgba(255, 250, 245, 0.5);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.lb-header,
+.lb-row {
+  display: grid;
+  grid-template-columns: 44px minmax(150px, 1.6fr) 70px repeat(6, 1fr);
+  align-items: center;
+  gap: 6px;
+  padding: 12px 18px;
+  font-size: 12.5px;
+}
+
+.lb-header {
+  background: rgba(45, 36, 56, 0.92);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.lb-header div,
+.lb-header .metric,
+.lb-header .metric.bold {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.lb-header .sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, font-weight 0.15s;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.lb-header .sortable:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.lb-header .sortable.active {
+  background: rgba(255, 255, 255, 0.18);
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 242, 0.4);
+}
+
+.lb-row {
+  border-bottom: 1px solid rgba(125, 90, 140, 0.06);
+  transition: background 0.18s ease;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-row:hover { background: rgba(255, 255, 255, 0.4); }
+
+.lb-row.is-db {
+  background: linear-gradient(90deg, rgba(201, 155, 196, 0.14) 0%, rgba(201, 155, 196, 0.04) 100%);
+}
+.lb-row.is-db:hover {
+  background: linear-gradient(90deg, rgba(201, 155, 196, 0.22) 0%, rgba(201, 155, 196, 0.08) 100%);
+}
+
+.rank {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.rank.top-1 { color: var(--rust); font-size: 16px; }
+.rank.top-2 { color: var(--blush); font-size: 15px; }
+.rank.top-3 { color: var(--mauve); font-size: 15px; }
+
+.rep-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.team-tag {
+  width: 4px;
+  height: 24px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.team-tag.brett { background: var(--brett); }
+.team-tag.dylan { background: var(--dylan); }
+.team-tag.other { background: var(--ink-mute); }
+
+.rep-name-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.rep-name-stack .mgr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.team-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-align: center;
+  font-weight: 500;
+}
+.team-pill.brett { background: rgba(245, 168, 156, 0.25); color: #A04E3D; }
+.team-pill.dylan { background: rgba(201, 155, 196, 0.28); color: #6E3F75; }
+.team-pill.other { background: rgba(125, 110, 140, 0.18); color: var(--ink-soft); }
+
+.metric.bold { color: var(--ink); font-weight: 600; }
+
 /* MOBILE */
 @media (max-width: 1100px) {
   .team-grid {
@@ -1114,7 +1336,7 @@ h1 em {
       <p class="subtitle">Brett vs Dylan. Two teams. One month. Let's go.</p>
     </div>
     <div class="date-stamp">
-      Day 3<span class="big" id="dateLabel">May 3, 2026</span>
+      Day 4<span class="big" id="dateLabel">May 4, 2026</span>
       <div class="day-progress" id="dayProgress">Day 0 of 22 · 0% through</div>
     </div>
   </header>
@@ -1167,12 +1389,44 @@ h1 em {
   <div class="view" id="view-leaderboard">
     <div class="section-head">
       <h2>Org leaderboard</h2>
-      <p style="font-size:13px;color:var(--ink-mute);font-style:italic">Will populate as the month builds. Right now everyone's at zero.</p>
+      <div class="legend-zero">
+        <span class="item">Day 2 of 22 · ranked by SQLs (lead conversion)</span>
+      </div>
     </div>
-    <div style="background:rgba(255,250,245,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:22px;padding:60px 24px;text-align:center;color:var(--ink-mute)">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:8px">Day 1</div>
-      <div style="font-family:'Inter',sans-serif;font-size:18px;color:var(--ink-soft)">Leaderboard activates as soon as today's calls land.</div>
-      <div style="font-size:13px;margin-top:14px;font-style:italic">Tomorrow morning's data drop = first standings.</div>
+
+    <div class="lb-controls">
+      <div class="filter-group" id="filterGroup">
+        <button class="chip active" data-team="all">All Teams · 26</button>
+        <button class="chip" data-team="Brett"><span class="dot" style="background:var(--brett)"></span>Brett · 10</button>
+        <button class="chip" data-team="Dylan"><span class="dot" style="background:var(--dylan)"></span>Dylan · 11</button>
+        <button class="chip" data-team="Other"><span class="dot" style="background:var(--ink-mute)"></span>Other · 5</button>
+      </div>
+      <div class="sort-control">
+        <label for="sortBy">Sort by</label>
+        <select class="sort-select" id="sortBy">
+          <option value="sql">SQLs</option>
+          <option value="cw">Closed Won</option>
+          <option value="sal">SALs</option>
+          <option value="rv">Recurring Revenue</option>
+          <option value="dm">DM Connects</option>
+          <option value="calls">Total Calls</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="lb-board">
+      <div class="lb-header">
+        <div>#</div>
+        <div>Rep</div>
+        <div>Team</div>
+        <div class="metric sortable" data-sort="calls" style="justify-content:flex-end">Calls</div>
+        <div class="metric sortable" data-sort="dm" style="justify-content:flex-end">DM</div>
+        <div class="metric sortable" data-sort="sal" style="justify-content:flex-end">SAL</div>
+        <div class="metric sortable" data-sort="sql" style="justify-content:flex-end">SQL</div>
+        <div class="metric sortable" data-sort="cw" style="justify-content:flex-end">CW</div>
+        <div class="metric sortable" data-sort="rv" style="justify-content:flex-end">RV</div>
+      </div>
+      <div id="lbRows"></div>
     </div>
   </div>
 
@@ -1217,11 +1471,13 @@ h1 em {
 </div>
 
 <script>
-const DATA = {"reps": [{"rep": "Alex Funches", "team": "Brett", "calls": 265, "dm": 15, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 10, "april_calls": 3324, "april_dm": 270, "april_sal": 12, "april_sql": 2, "april_cw": 2, "april_rv": 39473, "is_new_hire": false}, {"rep": "Andrew Kim", "team": "Brett", "calls": 203, "dm": 39, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 19.5, "sit_rate": 0.0, "cr": null, "april_carry": 3, "april_calls": 3459, "april_dm": 270, "april_sal": 5, "april_sql": 3, "april_cw": 4, "april_rv": 32281, "is_new_hire": false}, {"rep": "Austin Miyanishi", "team": "Brett", "calls": 229, "dm": 22, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 11, "april_calls": 1235, "april_dm": 138, "april_sal": 11, "april_sql": 0, "april_cw": 0, "april_rv": 3012, "is_new_hire": false}, {"rep": "Brooke Jacques", "team": "Brett", "calls": 388, "dm": 38, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 19.0, "sit_rate": 0.0, "cr": null, "april_carry": 18, "april_calls": 4310, "april_dm": 256, "april_sal": 23, "april_sql": 6, "april_cw": 1, "april_rv": 12450, "is_new_hire": false}, {"rep": "Collin Simon", "team": "Brett", "calls": 283, "dm": 28, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 28.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 18, "april_calls": 3105, "april_dm": 342, "april_sal": 25, "april_sql": 7, "april_cw": 2, "april_rv": 9883, "is_new_hire": false}, {"rep": "Spencer Norton", "team": "Brett", "calls": 257, "dm": 28, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 28.0, "sit_rate": 0.0, "cr": null, "april_carry": 11, "april_calls": 3151, "april_dm": 241, "april_sal": 15, "april_sql": 5, "april_cw": 2, "april_rv": 32249, "is_new_hire": false}, {"rep": "Tommy Theologis", "team": "Brett", "calls": 231, "dm": 22, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 7.3, "sit_rate": 0.0, "cr": null, "april_carry": 17, "april_calls": 2998, "april_dm": 345, "april_sal": 26, "april_sql": 10, "april_cw": 3, "april_rv": 50908, "is_new_hire": false}, {"rep": "Theo Stephen", "team": "Brett", "calls": 235, "dm": 17, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 17.0, "sit_rate": 0.0, "cr": null, "april_carry": 35, "april_calls": 3245, "april_dm": 439, "april_sal": 40, "april_sql": 6, "april_cw": 2, "april_rv": 6346, "is_new_hire": false}, {"rep": "Ashley Winterbottom", "team": "Brett", "calls": 180, "dm": 12, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 12.0, "sit_rate": 0.0, "cr": null, "april_carry": 6, "april_calls": 3931, "april_dm": 431, "april_sal": 11, "april_sql": 5, "april_cw": 0, "april_rv": 5359, "is_new_hire": false}, {"rep": "Andrew Haskell", "team": "Brett", "calls": 352, "dm": 31, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 31.0, "sit_rate": 0.0, "cr": null, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Adam Esquivel", "team": "Dylan", "calls": 319, "dm": 21, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 21.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 24, "april_calls": 2869, "april_dm": 309, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 9343, "is_new_hire": false}, {"rep": "Alex Guzman", "team": "Dylan", "calls": 226, "dm": 30, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 30.0, "sit_rate": 0.0, "cr": null, "april_carry": 10, "april_calls": 2746, "april_dm": 326, "april_sal": 13, "april_sql": 5, "april_cw": 2, "april_rv": 18007, "is_new_hire": false}, {"rep": "Briana Nono", "team": "Dylan", "calls": 297, "dm": 26, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 13.0, "sit_rate": 0.0, "cr": null, "april_carry": 14, "april_calls": 3202, "april_dm": 442, "april_sal": 19, "april_sql": 6, "april_cw": 0, "april_rv": 3958, "is_new_hire": false}, {"rep": "Eric Rice", "team": "Dylan", "calls": 286, "dm": 41, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 12, "april_calls": 3399, "april_dm": 484, "april_sal": 12, "april_sql": 0, "april_cw": 2, "april_rv": 6771, "is_new_hire": false}, {"rep": "Ethan Moody", "team": "Dylan", "calls": 132, "dm": 25, "sal": 0, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": 0.0, "april_carry": 17, "april_calls": 3345, "april_dm": 328, "april_sal": 26, "april_sql": 9, "april_cw": 0, "april_rv": 0, "is_new_hire": false}, {"rep": "John Meenan", "team": "Dylan", "calls": 271, "dm": 33, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 16.5, "sit_rate": 0.0, "cr": null, "april_carry": 18, "april_calls": 3166, "april_dm": 390, "april_sal": 21, "april_sql": 4, "april_cw": 1, "april_rv": 5134, "is_new_hire": false}, {"rep": "John Ogbeide", "team": "Dylan", "calls": 267, "dm": 27, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 27.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 23, "april_calls": 2823, "april_dm": 367, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 26568, "is_new_hire": false}, {"rep": "Trenton Hines", "team": "Dylan", "calls": 167, "dm": 23, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 23.0, "sit_rate": 0.0, "cr": null, "april_carry": 25, "april_calls": 3031, "april_dm": 240, "april_sal": 27, "april_sql": 5, "april_cw": 2, "april_rv": 18534, "is_new_hire": false}, {"rep": "Will Baldridge", "team": "Dylan", "calls": 237, "dm": 10, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 10.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 20, "april_calls": 4126, "april_dm": 311, "april_sal": 25, "april_sql": 10, "april_cw": 2, "april_rv": 33079, "is_new_hire": false}, {"rep": "Jackson Woodfin", "team": "Dylan", "calls": 110, "dm": 14, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 13, "april_calls": 2630, "april_dm": 351, "april_sal": 15, "april_sql": 4, "april_cw": 1, "april_rv": 8524, "is_new_hire": false}, {"rep": "Josh Rieth", "team": "Dylan", "calls": 355, "dm": 21, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 21.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Trevor Schliefer", "team": "Other", "calls": 0, "dm": 0, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Jonathan Munday", "team": "Other", "calls": 186, "dm": 30, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 10.0, "sit_rate": 33.3, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Nisheet Shah", "team": "Other", "calls": 335, "dm": 26, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 26.0, "sit_rate": 0.0, "cr": null, "april_carry": 16, "april_calls": 2270, "april_dm": 274, "april_sal": 17, "april_sql": 3, "april_cw": 1, "april_rv": 11939, "is_new_hire": false}, {"rep": "Michael Bernhardt", "team": "Other", "calls": 280, "dm": 30, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 13, "april_calls": 2780, "april_dm": 369, "april_sal": 16, "april_sql": 5, "april_cw": 1, "april_rv": 8674, "is_new_hire": false}, {"rep": "Bray Pettegrew", "team": "Other", "calls": 234, "dm": 22, "sal": 1, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 22.0, "sit_rate": 200.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}], "teams": [{"team": "Brett", "rep_count": 10, "total_calls": 2623, "total_dm": 252, "total_sal": 12, "total_sql": 1, "total_cw": 0, "total_rv": 0, "team_carry": 129, "april_total_rv": 191961, "april_total_cw": 16, "april_total_sal": 168}, {"team": "Dylan", "rep_count": 11, "total_calls": 2667, "total_dm": 271, "total_sal": 10, "total_sql": 5, "total_cw": 0, "total_rv": 0, "team_carry": 176, "april_total_rv": 129918, "april_total_cw": 12, "april_total_sal": 210}, {"team": "Other", "rep_count": 5, "total_calls": 1035, "total_dm": 108, "total_sal": 5, "total_sql": 3, "total_cw": 0, "total_rv": 0, "team_carry": 29, "april_total_rv": 20613, "april_total_cw": 2, "april_total_sal": 33}], "snapshot_date": "2026-05-03", "compared_to": null, "standards": {"calls_per_day": 125, "dm_per_day": 15, "sal_per_week": 6, "sql_per_week": 5, "cw_per_month": 4}, "days_elapsed": 1, "working_days_in_month": 22};
+const DATA = {"reps": [{"rep": "Alex Funches", "team": "Brett", "calls": 374, "dm": 15, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 10, "april_calls": 3324, "april_dm": 270, "april_sal": 12, "april_sql": 2, "april_cw": 2, "april_rv": 39473, "is_new_hire": false}, {"rep": "Andrew Kim", "team": "Brett", "calls": 301, "dm": 45, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 15.0, "sit_rate": 0.0, "cr": null, "april_carry": 3, "april_calls": 3459, "april_dm": 270, "april_sal": 5, "april_sql": 3, "april_cw": 4, "april_rv": 32281, "is_new_hire": false}, {"rep": "Austin Miyanishi", "team": "Brett", "calls": 330, "dm": 36, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 36.0, "sit_rate": 0.0, "cr": null, "april_carry": 11, "april_calls": 1235, "april_dm": 138, "april_sal": 11, "april_sql": 0, "april_cw": 0, "april_rv": 3012, "is_new_hire": false}, {"rep": "Brooke Jacques", "team": "Brett", "calls": 490, "dm": 44, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 14.7, "sit_rate": 33.3, "cr": 0.0, "april_carry": 18, "april_calls": 4310, "april_dm": 256, "april_sal": 23, "april_sql": 6, "april_cw": 1, "april_rv": 12450, "is_new_hire": false}, {"rep": "Collin Simon", "team": "Brett", "calls": 376, "dm": 31, "sal": 2, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 15.5, "sit_rate": 50.0, "cr": 0.0, "april_carry": 18, "april_calls": 3105, "april_dm": 342, "april_sal": 25, "april_sql": 7, "april_cw": 2, "april_rv": 9883, "is_new_hire": false}, {"rep": "Spencer Norton", "team": "Brett", "calls": 406, "dm": 40, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 20.0, "sit_rate": 0.0, "cr": null, "april_carry": 11, "april_calls": 3151, "april_dm": 241, "april_sal": 15, "april_sql": 5, "april_cw": 2, "april_rv": 32249, "is_new_hire": false}, {"rep": "Tommy Theologis", "team": "Brett", "calls": 232, "dm": 22, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 7.3, "sit_rate": 0.0, "cr": null, "april_carry": 17, "april_calls": 2998, "april_dm": 345, "april_sal": 26, "april_sql": 10, "april_cw": 3, "april_rv": 50908, "is_new_hire": false}, {"rep": "Theo Stephen", "team": "Brett", "calls": 247, "dm": 20, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 20.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 35, "april_calls": 3245, "april_dm": 439, "april_sal": 40, "april_sql": 6, "april_cw": 2, "april_rv": 6346, "is_new_hire": false}, {"rep": "Ashley Winterbottom", "team": "Brett", "calls": 356, "dm": 21, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 21.0, "sit_rate": 0.0, "cr": null, "april_carry": 6, "april_calls": 3931, "april_dm": 431, "april_sal": 11, "april_sql": 5, "april_cw": 0, "april_rv": 5359, "is_new_hire": false}, {"rep": "Andrew Haskell", "team": "Brett", "calls": 493, "dm": 40, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 40.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Adam Esquivel", "team": "Dylan", "calls": 401, "dm": 23, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 23.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 24, "april_calls": 2869, "april_dm": 309, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 9343, "is_new_hire": false}, {"rep": "Alex Guzman", "team": "Dylan", "calls": 311, "dm": 36, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 36.0, "sit_rate": 0.0, "cr": null, "april_carry": 10, "april_calls": 2746, "april_dm": 326, "april_sal": 13, "april_sql": 5, "april_cw": 2, "april_rv": 18007, "is_new_hire": false}, {"rep": "Briana Nono", "team": "Dylan", "calls": 381, "dm": 38, "sal": 3, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 12.7, "sit_rate": 0.0, "cr": null, "april_carry": 14, "april_calls": 3202, "april_dm": 442, "april_sal": 19, "april_sql": 6, "april_cw": 0, "april_rv": 3958, "is_new_hire": false}, {"rep": "Eric Rice", "team": "Dylan", "calls": 416, "dm": 47, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 12, "april_calls": 3399, "april_dm": 484, "april_sal": 12, "april_sql": 0, "april_cw": 2, "april_rv": 6771, "is_new_hire": false}, {"rep": "Ethan Moody", "team": "Dylan", "calls": 240, "dm": 34, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 34.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 17, "april_calls": 3345, "april_dm": 328, "april_sal": 26, "april_sql": 9, "april_cw": 0, "april_rv": 0, "is_new_hire": false}, {"rep": "John Meenan", "team": "Dylan", "calls": 289, "dm": 39, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 13.0, "sit_rate": 33.3, "cr": 0.0, "april_carry": 18, "april_calls": 3166, "april_dm": 390, "april_sal": 21, "april_sql": 4, "april_cw": 1, "april_rv": 5134, "is_new_hire": false}, {"rep": "John Ogbeide", "team": "Dylan", "calls": 308, "dm": 35, "sal": 3, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 11.7, "sit_rate": 66.7, "cr": 0.0, "april_carry": 23, "april_calls": 2823, "april_dm": 367, "april_sal": 26, "april_sql": 4, "april_cw": 1, "april_rv": 26568, "is_new_hire": false}, {"rep": "Trenton Hines", "team": "Dylan", "calls": 190, "dm": 27, "sal": 2, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 13.5, "sit_rate": 0.0, "cr": null, "april_carry": 25, "april_calls": 3031, "april_dm": 240, "april_sal": 27, "april_sql": 5, "april_cw": 2, "april_rv": 18534, "is_new_hire": false}, {"rep": "Will Baldridge", "team": "Dylan", "calls": 264, "dm": 11, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 11.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 20, "april_calls": 4126, "april_dm": 311, "april_sal": 25, "april_sql": 10, "april_cw": 2, "april_rv": 33079, "is_new_hire": false}, {"rep": "Jackson Woodfin", "team": "Dylan", "calls": 236, "dm": 22, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 13, "april_calls": 2630, "april_dm": 351, "april_sal": 15, "april_sql": 4, "april_cw": 1, "april_rv": 8524, "is_new_hire": false}, {"rep": "Josh Rieth", "team": "Dylan", "calls": 563, "dm": 36, "sal": 1, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 36.0, "sit_rate": 100.0, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Trevor Schliefer", "team": "Other", "calls": 0, "dm": 0, "sal": 0, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": null, "sit_rate": null, "cr": null, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Jonathan Munday", "team": "Other", "calls": 219, "dm": 35, "sal": 3, "sql": 1, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 11.7, "sit_rate": 33.3, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}, {"rep": "Nisheet Shah", "team": "Other", "calls": 425, "dm": 38, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 38.0, "sit_rate": 0.0, "cr": null, "april_carry": 16, "april_calls": 2270, "april_dm": 274, "april_sal": 17, "april_sql": 3, "april_cw": 1, "april_rv": 11939, "is_new_hire": false}, {"rep": "Michael Bernhardt", "team": "Other", "calls": 354, "dm": 41, "sal": 1, "sql": 0, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 41.0, "sit_rate": 0.0, "cr": null, "april_carry": 13, "april_calls": 2780, "april_dm": 369, "april_sal": 16, "april_sql": 5, "april_cw": 1, "april_rv": 8674, "is_new_hire": false}, {"rep": "Bray Pettegrew", "team": "Other", "calls": 256, "dm": 25, "sal": 3, "sql": 2, "cw": 0, "rv": 0, "avg_deal": null, "dm_per_sal": 8.3, "sit_rate": 66.7, "cr": 0.0, "april_carry": 0, "april_calls": null, "april_dm": null, "april_sal": null, "april_sql": null, "april_cw": null, "april_rv": null, "is_new_hire": true}], "teams": [{"team": "Brett", "rep_count": 10, "total_calls": 3605, "total_dm": 314, "total_sal": 17, "total_sql": 4, "total_cw": 0, "total_rv": 0, "team_carry": 129, "april_total_rv": 191961, "april_total_cw": 16, "april_total_sal": 168}, {"team": "Dylan", "rep_count": 11, "total_calls": 3599, "total_dm": 348, "total_sal": 16, "total_sql": 7, "total_cw": 0, "total_rv": 0, "team_carry": 176, "april_total_rv": 129918, "april_total_cw": 12, "april_total_sal": 210}, {"team": "Other", "rep_count": 5, "total_calls": 1254, "total_dm": 139, "total_sal": 8, "total_sql": 3, "total_cw": 0, "total_rv": 0, "team_carry": 29, "april_total_rv": 20613, "april_total_cw": 2, "april_total_sal": 33}], "snapshot_date": "2026-05-04", "compared_to": "2026-05-03", "standards": {"calls_per_day": 125, "dm_per_day": 15, "sal_per_week": 6, "sql_per_week": 5, "cw_per_month": 4}, "days_elapsed": 2, "working_days_in_month": 22, "rep_deltas": {"Alex Funches": {"calls": 109}, "Andrew Kim": {"calls": 98, "dm": 6, "sal": 1}, "Austin Miyanishi": {"calls": 101, "dm": 14, "sal": 1}, "Brooke Jacques": {"calls": 102, "dm": 6, "sal": 1, "sql": 1}, "Collin Simon": {"calls": 93, "dm": 3, "sal": 1}, "Spencer Norton": {"calls": 149, "dm": 12, "sal": 1}, "Tommy Theologis": {"calls": 1}, "Theo Stephen": {"calls": 12, "dm": 3, "sql": 1}, "Ashley Winterbottom": {"calls": 176, "dm": 9}, "Andrew Haskell": {"calls": 141, "dm": 9, "sql": 1}, "Adam Esquivel": {"calls": 82, "dm": 2}, "Alex Guzman": {"calls": 85, "dm": 6}, "Briana Nono": {"calls": 84, "dm": 12, "sal": 1}, "Eric Rice": {"calls": 130, "dm": 6}, "Ethan Moody": {"calls": 108, "dm": 9, "sal": 1}, "John Meenan": {"calls": 18, "dm": 6, "sal": 1, "sql": 1}, "John Ogbeide": {"calls": 41, "dm": 8, "sal": 2, "sql": 1}, "Trenton Hines": {"calls": 23, "dm": 4, "sal": 1}, "Will Baldridge": {"calls": 27, "dm": 1}, "Jackson Woodfin": {"calls": 126, "dm": 8}, "Josh Rieth": {"calls": 208, "dm": 15}, "Jonathan Munday": {"calls": 33, "dm": 5}, "Nisheet Shah": {"calls": 90, "dm": 12}, "Michael Bernhardt": {"calls": 74, "dm": 11, "sal": 1}, "Bray Pettegrew": {"calls": 22, "dm": 3, "sal": 2}}, "team_deltas": {"Brett": {"total_calls": 982, "total_dm": 62, "total_sal": 5, "total_sql": 3}, "Dylan": {"total_calls": 932, "total_dm": 77, "total_sal": 6, "total_sql": 2}, "Other": {"total_calls": 219, "total_dm": 31, "total_sal": 3}}};
 
 const STANDARDS = DATA.standards;
 const DAYS_ELAPSED = DATA.days_elapsed;
 const TOTAL_DAYS = DATA.working_days_in_month;
+const REP_DELTAS = DATA.rep_deltas || {};
+const TEAM_DELTAS = DATA.team_deltas || {};
 
 const fmt = n => typeof n === 'number' ? n.toLocaleString('en-US', {maximumFractionDigits: 1}) : (n || 0);
 const fmtCurrencyShort = n => {
@@ -1229,6 +1485,18 @@ const fmtCurrencyShort = n => {
   if (n >= 1000) return '$' + (n / 1000).toFixed(1) + 'k';
   return '$' + n.toLocaleString();
 };
+
+// Delta arrow renderers — only shows positive overnight changes
+function repDelta(rep, key) {
+  const d = REP_DELTAS[rep];
+  if (!d || !d[key]) return '';
+  return `<span class="delta-up">${d[key]}</span>`;
+}
+function teamDelta(team, key) {
+  const d = TEAM_DELTAS[team];
+  if (!d || !d[key]) return '';
+  return `<span class="delta-up">${d[key]}</span>`;
+}
 
 // Pace calculation: how is the rep/team doing vs target at THIS day?
 // Returns 'green' (>=100% pace), 'yellow' (75-99%), 'red' (<75%), or 'zero' (no data yet)
@@ -1306,7 +1574,7 @@ function renderTeamCards() {
             <div class="pace-tile is-${cwPace === 'green' ? 'on-pace' : cwPace === 'yellow' ? 'warning' : cwPace === 'red' ? 'behind' : ''}">
               <div class="pace-label">Closed Won<span class="pace-target">${cwMonthlyTarget}/month · team</span></div>
               <div class="pace-value-row">
-                <span class="pace-value">${t.total_cw}</span>
+                <span class="pace-value">${t.total_cw}${teamDelta(t.team, 'total_cw')}</span>
                 <span class="pace-needed">need ${cwMonthlyTarget}</span>
               </div>
               <div class="pace-bar"><div class="pace-fill ${cwPace}" style="width:${paceFillPct(t.total_cw, cwMonthlyTarget / TOTAL_DAYS, TOTAL_DAYS)}%"></div></div>
@@ -1315,7 +1583,7 @@ function renderTeamCards() {
             <div class="pace-tile is-${sqlPace === 'green' ? 'on-pace' : sqlPace === 'yellow' ? 'warning' : sqlPace === 'red' ? 'behind' : ''}">
               <div class="pace-label">SQLs<span class="pace-target">${sqlWeeklyTarget}/week · team</span></div>
               <div class="pace-value-row">
-                <span class="pace-value">${t.total_sql}</span>
+                <span class="pace-value">${t.total_sql}${teamDelta(t.team, 'total_sql')}</span>
                 <span class="pace-needed">need ${Math.round(sqlWeeklyTarget * 4.4)}</span>
               </div>
               <div class="pace-bar"><div class="pace-fill ${sqlPace}" style="width:${paceFillPct(t.total_sql, sqlWeeklyTarget / 5, TOTAL_DAYS)}%"></div></div>
@@ -1324,7 +1592,7 @@ function renderTeamCards() {
             <div class="pace-tile is-${salPace === 'green' ? 'on-pace' : salPace === 'yellow' ? 'warning' : salPace === 'red' ? 'behind' : ''}">
               <div class="pace-label">SALs<span class="pace-target">${salWeeklyTarget}/week · team</span></div>
               <div class="pace-value-row">
-                <span class="pace-value">${t.total_sal}</span>
+                <span class="pace-value">${t.total_sal}${teamDelta(t.team, 'total_sal')}</span>
                 <span class="pace-needed">need ${Math.round(salWeeklyTarget * 4.4)}</span>
               </div>
               <div class="pace-bar"><div class="pace-fill ${salPace}" style="width:${paceFillPct(t.total_sal, salWeeklyTarget / 5, TOTAL_DAYS)}%"></div></div>
@@ -1339,7 +1607,7 @@ function renderTeamCards() {
             <div class="pace-tile is-${dmPace === 'green' ? 'on-pace' : dmPace === 'yellow' ? 'warning' : dmPace === 'red' ? 'behind' : ''}">
               <div class="pace-label">DM Connects<span class="pace-target">${STANDARDS.dm_per_day}/day · per rep</span></div>
               <div class="pace-value-row">
-                <span class="pace-value">${fmt(t.total_dm)}</span>
+                <span class="pace-value">${fmt(t.total_dm)}${teamDelta(t.team, 'total_dm')}</span>
                 <span class="pace-needed">need ${fmt(dmTarget * TOTAL_DAYS)}</span>
               </div>
               <div class="pace-bar"><div class="pace-fill ${dmPace}" style="width:${paceFillPct(t.total_dm, dmTarget, TOTAL_DAYS)}%"></div></div>
@@ -1348,7 +1616,7 @@ function renderTeamCards() {
             <div class="pace-tile is-${callsPace === 'green' ? 'on-pace' : callsPace === 'yellow' ? 'warning' : callsPace === 'red' ? 'behind' : ''}">
               <div class="pace-label">Calls<span class="pace-target">${STANDARDS.calls_per_day}/day · per rep</span></div>
               <div class="pace-value-row">
-                <span class="pace-value">${fmt(t.total_calls)}</span>
+                <span class="pace-value">${fmt(t.total_calls)}${teamDelta(t.team, 'total_calls')}</span>
                 <span class="pace-needed">need ${fmt(callsTarget * TOTAL_DAYS)}</span>
               </div>
               <div class="pace-bar"><div class="pace-fill ${callsPace}" style="width:${paceFillPct(t.total_calls, callsTarget, TOTAL_DAYS)}%"></div></div>
@@ -1491,11 +1759,11 @@ function toggleDrill(team) {
           <div class="rep-rank">${i + 1}</div>
           <div class="rep-name">${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</div>
           ${showCarry ? `<div class="metric" data-label="Carry"><span class="carry-cell ${carryClass}">${r.april_carry}</span></div>` : ''}
-          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span></div>
-          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span></div>
-          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span></div>
-          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span></div>
-          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span></div>
+          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
           <div class="metric" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
           <div class="metric" data-label="Sit %"><span class="value-text">${r.sit_rate !== null ? r.sit_rate + '%' : '—'}</span></div>
           <div class="metric" data-label="CR %"><span class="value-text">${r.cr !== null ? r.cr + '%' : '—'}</span></div>
@@ -1568,11 +1836,11 @@ function toggleOtherDrill() {
           <div class="rep-name">${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</div>
           ${showCarry ? `<div class="metric" data-label="Carry"><span class="carry-cell ${carryClass}">${r.april_carry}</span></div>` : ''}
           <div class="metric" data-label="Mgr"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-mute);letter-spacing:0.06em">${REP_TO_MGR[r.rep] || '—'}</span></div>
-          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span></div>
-          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span></div>
-          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span></div>
-          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span></div>
-          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span></div>
+          <div class="metric" data-label="Calls"><span class="pace-dot ${callsPace}"></span><span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+          <div class="metric" data-label="DM"><span class="pace-dot ${dmPace}"></span><span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+          <div class="metric" data-label="SAL"><span class="pace-dot ${salPace}"></span><span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+          <div class="metric" data-label="SQL"><span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+          <div class="metric" data-label="CW"><span class="pace-dot ${cwPace}"></span><span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
           <div class="metric" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
         </div>
       `;
@@ -1594,6 +1862,93 @@ document.querySelectorAll('.tab').forEach(t => {
   });
 });
 
+// LEADERBOARD logic
+let activeTeamFilter = 'all';
+let lbSortKey = 'sql';
+
+function getFilteredReps() {
+  const reps = activeTeamFilter === 'all'
+    ? DATA.reps.filter(r => r.team !== 'TBD')
+    : DATA.reps.filter(r => r.team === activeTeamFilter);
+  return reps;
+}
+
+function getSortedReps(arr) {
+  return [...arr].sort((a, b) => {
+    const av = a[lbSortKey] ?? -Infinity;
+    const bv = b[lbSortKey] ?? -Infinity;
+    if (bv !== av) return bv - av;
+    // Tiebreakers: rv > cw > sql > sal
+    return b.rv - a.rv || b.cw - a.cw || b.sql - a.sql || b.sal - a.sal;
+  });
+}
+
+const REP_TO_MGR_LB = {
+  'Trevor Schliefer': 'Danny',
+  'Jonathan Munday': 'Danny',
+  'Nisheet Shah': 'Troy',
+  'Michael Bernhardt': 'Troy',
+  'Bray Pettegrew': 'Troy',
+};
+
+function renderLeaderboard() {
+  const sorted = getSortedReps(getFilteredReps());
+  document.getElementById('lbRows').innerHTML = sorted.map((r, i) => {
+    const rank = i + 1;
+    const rankClass = rank <= 3 ? `top-${rank}` : '';
+    const teamLower = r.team.toLowerCase();
+    const isDB = r.team === 'Dylan';
+    const mgrLabel = r.team === 'Other' ? (REP_TO_MGR_LB[r.rep] || 'Other') : `${r.team}'s team`;
+    const teamPillLabel = r.team === 'Other' ? (REP_TO_MGR_LB[r.rep] || 'Other').slice(0,4) : r.team.slice(0,4);
+
+    return `
+      <div class="lb-row ${isDB ? 'is-db' : ''}">
+        <div class="rank ${rankClass}">${rank}</div>
+        <div class="rep-cell">
+          <div class="team-tag ${teamLower}"></div>
+          <div class="rep-name-stack">
+            <span>${r.rep}${r.is_new_hire ? '<span class="new-hire-badge">NEW</span>' : ''}</span>
+            <span class="mgr">${mgrLabel}</span>
+          </div>
+        </div>
+        <div><span class="team-pill ${teamLower}">${teamPillLabel}</span></div>
+        <div class="metric ${lbSortKey==='calls'?'bold':''}" data-label="Calls"><span class="value-text">${fmt(r.calls)}</span>${repDelta(r.rep, 'calls')}</div>
+        <div class="metric ${lbSortKey==='dm'?'bold':''}" data-label="DM"><span class="value-text">${fmt(r.dm)}</span>${repDelta(r.rep, 'dm')}</div>
+        <div class="metric ${lbSortKey==='sal'?'bold':''}" data-label="SAL"><span class="value-text">${r.sal}</span>${repDelta(r.rep, 'sal')}</div>
+        <div class="metric ${lbSortKey==='sql'?'bold':''}" data-label="SQL"><span class="value-text">${r.sql}</span>${repDelta(r.rep, 'sql')}</div>
+        <div class="metric ${lbSortKey==='cw'?'bold':''}" data-label="CW"><span class="value-text">${r.cw}</span>${repDelta(r.rep, 'cw')}</div>
+        <div class="metric ${lbSortKey==='rv'?'bold':''}" data-label="RV"><span class="value-text">${fmtCurrencyShort(r.rv)}</span></div>
+      </div>
+    `;
+  }).join('');
+
+  document.querySelectorAll('.lb-header .sortable').forEach(el => {
+    el.classList.toggle('active', el.dataset.sort === lbSortKey);
+  });
+}
+
+document.getElementById('filterGroup').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('#filterGroup .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  activeTeamFilter = chip.dataset.team;
+  renderLeaderboard();
+});
+
+document.getElementById('sortBy').addEventListener('change', e => {
+  lbSortKey = e.target.value;
+  renderLeaderboard();
+});
+
+document.querySelectorAll('.lb-header .sortable').forEach(el => {
+  el.addEventListener('click', () => {
+    lbSortKey = el.dataset.sort;
+    document.getElementById('sortBy').value = lbSortKey;
+    renderLeaderboard();
+  });
+});
+
 // Update day progress
 const daysElapsed = DATA.days_elapsed;
 const dayPct = (daysElapsed / TOTAL_DAYS) * 100;
@@ -1601,6 +1956,7 @@ document.getElementById('dayProgress').textContent = `Day ${daysElapsed} of ${TO
 document.getElementById('monthProgressFill').style.width = dayPct + '%';
 
 renderTeamCards();
+renderLeaderboard();
 </script>
 </body>
 </html>
